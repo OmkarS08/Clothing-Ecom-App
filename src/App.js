@@ -1,5 +1,5 @@
 import React from "react";
-import CategoryDirectory from "./components/CategoryDirectory/Category-directory";
+import CategoryDirectory from "./components/Directory/Category-directory";
 function App() {
 
   const Category =[
