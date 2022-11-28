@@ -16,7 +16,7 @@ const defaultFormFields ={
     const SignUpForm =() =>{
     const [formFields, setFormfields] =useState(defaultFormFields);
     const {displayName ,email,password,confirmPassword}=formFields;// destructuring
-    console.log("hit");
+    // console.log("hit");
     
     const {setCurrentUser} =useContext(UserContext); //setting up Usercontext 
     
