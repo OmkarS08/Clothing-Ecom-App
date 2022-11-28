@@ -3,16 +3,20 @@ import ReactDOM from 'react-dom/client';
 import {BrowserRouter} from 'react-router-dom'
 import './index.scss';
 import App from './App';
+import { UserProvider } from './contexts/user.context';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
   <BrowserRouter>
-  <App />
-  </BrowserRouter>    
+  <UserProvider>
+  <App /> 
+  </UserProvider>
+  </BrowserRouter>
   </React.StrictMode>
 );
+// userprovider would be specific to the the App component
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
