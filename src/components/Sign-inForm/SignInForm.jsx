@@ -1,11 +1,11 @@
 
-import { useState ,useContext} from "react";
+import { useState } from "react";
 import { PopUpSignIn ,createUserDocumentFromAuth,signInAuthUserWithEmailAndPassword } from "../../utils/firebase.utils";
 import './SignInForm.styles.scss'
 import FormInput from "../Form-input/FormInput";
 import Button from "../Button/Button";
 import { errorPrefix } from "@firebase/util";
-import { UserContext } from "../../contexts/user.context";
+
 //setting object for generalising
 const defaultFormFields ={
     email:'',
@@ -16,15 +16,13 @@ const defaultFormFields ={
     const [formFields, setFormfields] =useState(defaultFormFields);
     const {email,password}=formFields;// destructuring
     
-    const {setCurrentUser } =useContext(UserContext) // setting up setUserContext usercontext
-
+   
     const resetFormFields =() =>{ //reset the form-fields after sign-up
         setFormfields(defaultFormFields);
     }
 
     const SignInWithGoogle = async() =>{
-        const {user} = await PopUpSignIn();
-        await createUserDocumentFromAuth(user);
+         await PopUpSignIn();
     }
 
      const handleSubmit = async(event)=>{
@@ -32,7 +30,6 @@ const defaultFormFields ={
 
         try {
             const {user} = await signInAuthUserWithEmailAndPassword(email,password);
-            setCurrentUser(user); // storing the data from signInAuth method into user contecxt 
             resetFormFields();
         } 
         catch (error) {

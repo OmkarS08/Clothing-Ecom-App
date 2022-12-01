@@ -15,8 +15,7 @@ export const UserProvider =({children})=>{
     const[currentUser,setCurrentUser]=useState(null);
     const value={currentUser,setCurrentUser};
     useEffect( () =>{
-        const unsubscribe = onAuthStateChangedListner((user)=>{console.log(user);});
-        return unsubscribe;
-    },[]) // only run this function when the component is mount
+        const unsubscribe = onAuthStateChangedListner((user)=>{ console.log(user);setCurrentUser(user);});
+        return unsubscribe;},[]) // only run this function when the component is mount
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
