@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { onAuthStateChangedListner } from "../utils/firebase.utils";
+import { onAuthStateChangedListner ,createUserDocumentFromAuth } from "../utils/firebase.utils";
 // context help us to store data which can be sent to particular node 
 //without the help of props which makes it in efficient
 
@@ -15,7 +15,11 @@ export const UserProvider =({children})=>{
     const[currentUser,setCurrentUser]=useState(null);
     const value={currentUser,setCurrentUser};
     useEffect( () =>{
-        const unsubscribe = onAuthStateChangedListner((user)=>{ console.log(user);setCurrentUser(user);});
+        const unsubscribe = onAuthStateChangedListner((user)=>{ 
+            if(user){
+                createUserDocumentFromAuth(user)
+            }
+            setCurrentUser(user);});
         return unsubscribe;},[]) // only run this function when the component is mount
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
