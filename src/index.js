@@ -6,17 +6,19 @@ import App from './App';
 import { UserProvider } from './contexts/user.context';
 import { ProductsProvider } from './contexts/Products.context';
 import reportWebVitals from './reportWebVitals';
-
+import { CartProvider } from './contexts/Card.context';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  <BrowserRouter>
-  <UserProvider>
-  <ProductsProvider>
-  <App /> 
-  </ProductsProvider>
-  </UserProvider>
-  </BrowserRouter>
+    <BrowserRouter>
+      <UserProvider>
+        <ProductsProvider>
+          <CartProvider>
+            <App /> 
+          </CartProvider>
+        </ProductsProvider>
+      </UserProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 // userprovider would be specific to the the App component
