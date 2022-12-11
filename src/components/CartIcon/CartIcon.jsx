@@ -11,7 +11,6 @@ export const CartIcon =() =>{
         <div className='cart-icon-container' onClick={toggleCartOpen}>
         <ShoppingIcon className='shopping-icon'/>
         <span className='item-count'>0</span>
-        <span>just for git</span>
         </div>
     )
 }
