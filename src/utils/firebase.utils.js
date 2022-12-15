@@ -1,5 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+
+// authentication-methods
 import {getAuth ,
     signInWithPopup,
     signInWithEmailAndPassword,
@@ -7,7 +9,16 @@ import {getAuth ,
     createUserWithEmailAndPassword,
     signOut,
     onAuthStateChanged} from 'firebase/auth'
-import {doc,setDoc,getDoc,getFirestore} from 'firebase/firestore'
+
+// database-methods
+import {doc,
+    setDoc,
+    getDoc,
+    getFirestore,
+    collection,
+    writeBatch,
+    query,
+    getDocs} from 'firebase/firestore'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -39,6 +50,33 @@ export const PopUpSignIn = () => signInWithPopup(auth ,googleProvider);
 // export const RedirectSignIn =()=> signInWithRedirect(auth,googleProvider);
 
 export const db = getFirestore();
+
+export const addCollectionAndDocuments = async (collectionsKey, objectToAdd) =>{
+    const collectionRef = collection(db,collectionsKey)
+    const batch = writeBatch(db);
+    objectToAdd.forEach((object)=>{
+        const docRef =doc(collectionRef,object.title.toLowerCase());
+        batch.set(docRef,object);
+    });
+
+    await batch.commit();
+    console.log('done');
+}
+
+export const getCategoriesAndDocuments =async () =>{
+    const collectionRef =collection(db,'categories')
+    const q = query(collectionRef);
+
+    const querySnapshot = await getDocs(q);
+    const CategoryMap =querySnapshot.docs.reduce((acc,docSnapshot) =>{
+        const{title , items} = docSnapshot.data();
+        acc[title.toLowerCase()] =items;
+        return acc;
+    },{})
+
+    return CategoryMap;
+}
+
 // adding User to db
 export const createUserDocumentFromAuth =  async (userAuth,additionalInformation={}) =>{
     const userDocRef = doc(db,'users',userAuth.uid);
