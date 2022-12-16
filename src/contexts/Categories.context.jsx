@@ -3,12 +3,12 @@ import { createContext,useState,useEffect } from "react";
 import SHOP_DATA from "../Shop-data";
 import { addCollectionAndDocuments, getCategoriesAndDocuments } from "../utils/firebase.utils";
 
-export const ProductsContext = createContext({
+export const CategoriesContext = createContext({
     products :[]
 }); // setup context
 
-export const ProductsProvider = ({children}) =>{
-    const [products ,setProducts] =useState([])
+export const CategoriesProvider = ({children}) =>{
+    const [categoriesMap ,setCategoriesMap] =useState({});
 
 
     // async function in useEffect
@@ -16,16 +16,21 @@ export const ProductsProvider = ({children}) =>{
         const getCategoriesMap =async() =>{
             const CategoryMap =await getCategoriesAndDocuments();
             console.log(CategoryMap);
+            setCategoriesMap(CategoryMap);
         }
         getCategoriesMap();
     })
+
+    const value = {categoriesMap};
+    return(
+        <CategoriesContext.Provider value={value}>{children}</CategoriesContext.Provider>
+    )
+}
+
+
+
 
 //    one time use to add the data to firestore
     // useEffect(()=>{
     //     addCollectionAndDocuments('categories',SHOP_DATA)
     // },[])
-    const value = {products};
-    return(
-        <ProductsContext.Provider value={value}>{children}</ProductsContext.Provider>
-    )
-}
