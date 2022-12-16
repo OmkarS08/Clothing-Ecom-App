@@ -19,7 +19,7 @@ export const CategoriesProvider = ({children}) =>{
             setCategoriesMap(CategoryMap);
         }
         getCategoriesMap();
-    })
+    }, []);
 
     const value = {categoriesMap};
     return(
