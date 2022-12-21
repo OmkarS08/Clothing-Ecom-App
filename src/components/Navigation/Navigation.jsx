@@ -6,7 +6,7 @@ import { CartDropDown } from '../CartDropDown/CartDropDown';
 import { UserContext } from '../../contexts/user.context';
 import { CartContext } from '../../contexts/Card.context';
 import { signOutUser } from '../../utils/firebase.utils';
-import "./Navigation.styles.scss";
+import { NavigationContainer,NavLink,NavLinksContainer,LogoContainer } from './Navigation.styles';
 
 const Navigation =() =>{
   const{currentUser } =useContext(UserContext); // setting up currentUser  in Context // it re-renders  when current user changes
@@ -16,18 +16,21 @@ const Navigation =() =>{
   //console.log(currentUser);
     return(
       <Fragment>
-      <div className='navigation'>
-        <Link className='nav-logo-container' to='/'>
+      <NavigationContainer>
+        <LogoContainer to='/'>
             <Crownlogo/>
-        </Link>
-        <div className='nav-links-container'>
-            <Link className='nav-link' to='/shop'>Shop</Link>
-            { currentUser ? ( <span className='nav-link' onClick={signOutUser}>SIGN OUT</span>) : (<Link className='nav-link' to='/auth'>SIGN IN</Link>)}
+        </LogoContainer>
+        <NavLinksContainer>
+            <NavLink  to='/shop'>Shop</NavLink>
+            { currentUser ?
+             ( <NavLink as='span' onClick={signOutUser}>SIGN OUT</NavLink>) 
+             : (<NavLink  to='/auth'>SIGN IN
+             </NavLink>)}
             <CartIcon/>
-        </div>
-        {isCartOpen && <CartDropDown/>  }   
-      </div>
-      <Outlet/>
+        </NavLinksContainer>
+        {isCartOpen && <CartDropDown/>  }  
+      </NavigationContainer>
+      <Outlet/> 
       </Fragment>)
   }
 

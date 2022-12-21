@@ -3,7 +3,7 @@ import { useState } from "react";
 import { PopUpSignIn ,createUserDocumentFromAuth,signInAuthUserWithEmailAndPassword } from "../../utils/firebase.utils";
 import './SignInForm.styles.scss'
 import FormInput from "../Form-input/FormInput";
-import Button from "../Button/Button";
+import Button ,{Button_Types_Classes}from "../Button/Button";
 import { errorPrefix } from "@firebase/util";
 
 //setting object for generalising
@@ -64,7 +64,7 @@ const defaultFormFields ={
             <FormInput label='Password' type='password' required onChange={handleChange} name='password' value={password}/>
             <div className="buttons-container">
             <Button  type="submit"> Sign In</Button>
-            <Button buttonType='google' type='button' onClick={SignInWithGoogle} > Google Sign In</Button>
+            <Button buttonType={Button_Types_Classes.google} type='button' onClick={SignInWithGoogle} > Google Sign In</Button>
             </div>
         </form>
     </div>)
